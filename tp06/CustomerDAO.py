@@ -32,7 +32,15 @@ class CustomerDAO:
                 c = Customer(*l)
                 yield c
 
+    def __enter__(self):
+        print("def __enter__(self)")
+        return self.file
 
+    def __exit__(self, exc_type, exc_value, traceback):
+        print("def __exit__(self, exc_type, exc_value, traceback)")
+        self.file.close()
 
     def __del__(self):
-        self.file.close()
+        print("def __del__(self)",self.file.closed)
+        if not self.file.closed:
+            self.file.close()
