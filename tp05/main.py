@@ -14,7 +14,21 @@ def filter(col_generator):
     if col_generator == "true":
         yield True
 
+
 def main():
+    file_name = "data.csv"
+    lines = (line for line in open(file_name))
+    list_lines = (line.strip().split(",") for line in lines)
+    # all_dones = (data[-1] for data in list_lines)
+    # dones = (True for d in all_dones if d == "true")
+
+    # cpt = sum(dones)
+    # print(cpt)
+    maliste = list(list_lines)
+    print(len(maliste))
+
+
+def main02():
     file_name = "data.csv"
     
     g1 = read_lines(file_name)
