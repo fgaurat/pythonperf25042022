@@ -2,6 +2,19 @@
 
 import contextlib
 from CustomerDAO import CustomerDAO
+import time
+
+class TimePerf(contextlib.ContextDecorator):
+    def __enter__(self):
+        self.start_time = time.perf_counter()
+        print('Starting')
+        return self
+
+    def __exit__(self, *exc):
+        self.end_time = time.perf_counter()
+        print(f'Finishing in {self.end_time-self.start_time} s.')
+        return False
+
 
 @contextlib.contextmanager
 def a_function(filename):
@@ -14,7 +27,20 @@ def a_function(filename):
         file.close()
 
 
+@TimePerf()
+def slow_function():
+    print("slow_function")
+    time.sleep(2)
+    # a=2/0
+
+
 def main():
+    slow_function()
+
+
+
+
+def main03():
     with a_function('data.csv') as f:
         for line in f:
             print(line.strip())
